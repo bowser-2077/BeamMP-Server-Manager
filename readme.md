@@ -6,7 +6,7 @@ Tired of editing config files? This sleek GUI handles everything:
 
 > [!NOTE]
 > App may crash for some reasons
-> When you are doing actions. Dont panic, just restart it
+> when you are doing actions. Dont panic, just restart it
 
 ### What You Get
 
