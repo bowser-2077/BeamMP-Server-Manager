@@ -1,5 +1,10 @@
 name: Build and Pre-Release
 
+permissions:
+  contents: write
+  releases: write
+
+
 on:
   push:
     branches:
