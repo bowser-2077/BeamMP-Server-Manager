@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller
+          pip install pyinstaller requests toml PyQt5
 
       - name: Build executable
         run: |
-          pyinstaller --noconsole --onefile --icon=icon.ico app.pyw
+          pyinstaller --noconsole --onefile app.pyw
 
       - name: Get short commit SHA
         id: vars
