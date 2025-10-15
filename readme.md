@@ -4,6 +4,10 @@ The easiest way to host BeamMP servers.
 Tired of editing config files? This sleek GUI handles everything:
 (There was no previous versions because they were too bugged)
 
+> [!NOTE]
+> App may crash for some reasons
+> When you are doing actions. Dont panic, just restart it
+
 ### What You Get
 
 - One-click server control – Start/stop with 1 button   
