@@ -1,15 +1,14 @@
 name: Build and Pre-Release
 
-permissions:
-  contents: write
-
-
 on:
   push:
     branches:
       - main
     paths:
       - "app.pyw"
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -31,11 +30,15 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --noconsole --icon=icon.ico --onefile app.pyw
+          pyinstaller --noconsole --onefile --icon=icon.ico app.pyw
 
       - name: Get short commit SHA
         id: vars
-        run: echo "sha_short=${GITHUB_SHA::7}" >> $GITHUB_ENV
+        shell: bash
+        run: echo "sha_short=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - name: Rename executable
+        run: move dist/app.exe dist/BeamMP-Server-Manager.exe
 
       - name: Create Pre-release
         uses: softprops/action-gh-release@v2
@@ -45,6 +48,6 @@ jobs:
           body: "Auto build for commit ${{ env.sha_short }}"
           draft: false
           prerelease: true
-          files: dist/app.exe
+          files: dist/BeamMP-Server-Manager.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
