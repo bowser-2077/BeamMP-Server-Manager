@@ -1,0 +1,46 @@
+name: Build and Pre-Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app.pyw"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Build executable
+        run: |
+          pyinstaller --noconsole --icon=icon.ico --onefile app.pyw
+
+      - name: Get short commit SHA
+        id: vars
+        run: echo "sha_short=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Create Pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: pre-${{ env.sha_short }}
+          name: "Pre-release ${{ env.sha_short }}"
+          body: "Auto build for commit ${{ env.sha_short }}"
+          draft: false
+          prerelease: true
+          files: dist/app.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
